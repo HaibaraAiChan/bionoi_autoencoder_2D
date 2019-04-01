@@ -38,17 +38,17 @@ def getArgs():
                         help='size of output feature of the autoencoder')
 
     parser.add_argument('-data_dir',
-                        default='../../../../work/derick/deeplearning-data/bae-test-images/',
+                        default='../bae-data-images/',
                         required=False,
                         help='director of training images')
 
     parser.add_argument('-feature_dir',
-                        default='../bae-data-features/',
+                        default='../bae-data-features/dense/',
                         required=False,
                         help='directory of output features stored in pickle file')
 
     parser.add_argument('-model_file',
-                        default='./model/bionoi_autoencoder_dense.pt',
+                        default='../trained_model/bionoi_autoencoder_dense.pt',
                         required=False,
                         help='file to save the model')
 
@@ -58,7 +58,7 @@ def getArgs():
                         help='director of training images')						
 
     parser.add_argument('-batch_size',
-                        default=8,
+                        default=16,
 						type=int,
                         required=False,
                         help='the batch size, normally 2^n.')

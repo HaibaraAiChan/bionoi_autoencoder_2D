@@ -85,7 +85,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 	train_loss_history = []
 
 	# send model to GPU if available
-	model.to(device)
+	model = model.to(device)
 
 	# need a deep copy here because weights will be updated in the future
 	best_model_wts = copy.deepcopy(model.state_dict())
@@ -96,10 +96,10 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		print('-' * 15)		
 		running_loss = 0.0
 		for images in dataloader:
-			images.to(device) # send to GPU if available
+			images = images.to(device) # send to GPU if available
 			images_out = model(images)# forward
-			images = images.cpu()
-			images_out = images_out.cpu()
+			#images = images.cpu()
+			#images_out = images_out.cpu()
 			loss = criterion(images,images_out)
 			loss.backward() # back propagation
 			optimizer.step() # updata parameters
