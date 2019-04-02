@@ -132,7 +132,7 @@ def inference(device, image, model):
 	image_out = model(image)
 	return image_out
 
-def encode(device, image, model)
+def encode(device, image, model):
 	"""
 	Return the encoded features of input image.
 	The autoencoder model should have a method 'encode'.

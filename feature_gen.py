@@ -4,6 +4,7 @@ then plot the original image and reconstructed image.
 This code is used to visually verify the correctness of the autoencoder
 """
 import torch
+import argparse
 import matplotlib.pyplot as plt
 from utils import DenseAutoencoder, inference
 from helper import imshow

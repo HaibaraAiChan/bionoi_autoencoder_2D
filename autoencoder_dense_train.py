@@ -105,7 +105,7 @@ if __name__ == "__main__":
 	
 	# get some random training images to show
 	dataiter = iter(dataloader)
-	images = dataiter.next()
+	images, filename = dataiter.next()
 
 	#print(images.shape)
 	#imshow(torchvision.utils.make_grid(images))
@@ -126,15 +126,21 @@ if __name__ == "__main__":
 		print("Using "+str(torch.cuda.device_count())+" GPUs...")
 		model = nn.DataParallel(model)
 
+	# print the paramters to train
+	print('paramters to train:')
+	for name,param in model.named_parameters():
+		if param.requires_grad == True:
+			print(str(name))
+
 	# loss function  
 	criterion = nn.MSELoss()
 
 	# optimizer  
 	optimizer = optim.Adam(model.parameters(), 
-						   lr=0.0001, 
+						   lr=0.001, 
 						   betas=(0.9, 0.999), 
 						   eps=1e-08, 
-						   weight_decay=0.005, 
+						   weight_decay=0.00005, 
 						   amsgrad=False)
 
 	learningRateScheduler = optim.lr_scheduler.MultiStepLR(optimizer, 
