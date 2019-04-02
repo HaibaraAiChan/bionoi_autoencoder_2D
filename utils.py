@@ -32,7 +32,7 @@ class UnsuperviseDataset(data.Dataset):
 		#print(self.data_dir+f)
 		img = io.imread(self.data_dir+f)
 		# apply the transform
-		return self.transform(img)
+		return self.transform(img), f
 
 class DenseAutoencoder(nn.Module):
 	"""
@@ -81,6 +81,9 @@ class DenseAutoencoder(nn.Module):
 		return x
 
 def train(device, num_epochs, dataloader, model, criterion, optimizer, learningRateScheduler):
+	"""
+	Train the autoencoder
+	"""
 	since = time.time()
 	train_loss_history = []
 
@@ -95,7 +98,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		print('Epoch {}/{}'.format(epoch+1, num_epochs))
 		print('-' * 15)		
 		running_loss = 0.0
-		for images in dataloader:
+		for images, file_name in dataloader:
 			images = images.to(device) # send to GPU if available
 			images_out = model(images)# forward
 			#images = images.cpu()
@@ -119,3 +122,22 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 	# load best model weights
 	model.load_state_dict(best_model_wts)
 	return model, train_loss_history
+
+def inference(device, image, model):
+	"""
+	Return the reconstructed image
+	"""
+	model = model.to(device)
+	image = image.to(device)
+	image_out = model(image)
+	return image_out
+
+def encode(device, image, model)
+	"""
+	Return the encoded features of input image.
+	The autoencoder model should have a method 'encode'.
+	"""
+	model = model.to(device)
+	image = image.to(device)
+	features = model.encode(image)
+	return features

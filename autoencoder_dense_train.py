@@ -40,7 +40,7 @@ def getArgs():
     parser.add_argument('-data_dir',
                         default='../bae-data-images/',
                         required=False,
-                        help='director of training images')
+                        help='directory of training images')
 
     parser.add_argument('-feature_dir',
                         default='../bae-data-features/dense/',
@@ -55,7 +55,7 @@ def getArgs():
     parser.add_argument('-log_dir',
                         default='./log/',
                         required=False,
-                        help='director of training images')						
+                        help='directory of training images')						
 
     parser.add_argument('-batch_size',
                         default=16,
