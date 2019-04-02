@@ -40,7 +40,9 @@ if __name__ == "__main__":
 	# put images into dataset
 	img_list = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
 	dataset = UnsuperviseDataset(data_dir, img_list, transform=transform)  
-    image = dataset[index]
+
+    	# create dataloader
+	dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=1)
 
     # instantiate model
 	model = DenseAutoencoder(input_size, feature_size)
