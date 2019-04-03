@@ -26,7 +26,7 @@ def getArgs():
                         help='seed for random number generation')
 
     parser.add_argument('-epoch',
-                        default=10,
+                        default=20,
 						type=int,
                         required=False,
                         help='number of epochs to train')
@@ -58,7 +58,7 @@ def getArgs():
                         help='directory of training images')						
 
     parser.add_argument('-batch_size',
-                        default=16,
+                        default=512,
 						type=int,
                         required=False,
                         help='the batch size, normally 2^n.')

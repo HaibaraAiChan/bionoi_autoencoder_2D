@@ -80,6 +80,34 @@ class DenseAutoencoder(nn.Module):
 		x = self.decode(x)
 		return x
 
+class ConvAutoencoder(nn.Module):
+	"""
+	Convolutional style autoencoder
+	"""
+    def __init__(self):
+        super(ConvAutoencoder, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Conv2d(3, 16, 7, stride=1, padding=1),  # b, 16, 10, 10
+            nn.ReLU(True),
+            nn.MaxPool2d(2, stride=2),  # b, 16, 5, 5
+            nn.Conv2d(16, 8, 3, stride=2, padding=1),  # b, 8, 3, 3
+            nn.ReLU(True),
+            nn.MaxPool2d(2, stride=1)  # b, 8, 2, 2
+        )
+        self.decoder = nn.Sequential(
+            nn.ConvTranspose2d(8, 16, 3, stride=2),  # b, 16, 5, 5
+            nn.ReLU(True),
+            nn.ConvTranspose2d(16, 8, 5, stride=3, padding=1),  # b, 8, 15, 15
+            nn.ReLU(True),
+            nn.ConvTranspose2d(8, 1, 2, stride=2, padding=1),  # b, 1, 28, 28
+            nn.Tanh()
+        )
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+
 def train(device, num_epochs, dataloader, model, criterion, optimizer, learningRateScheduler):
 	"""
 	Train the autoencoder
@@ -98,14 +126,18 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		print('Epoch {}/{}'.format(epoch+1, num_epochs))
 		print('-' * 15)		
 		running_loss = 0.0
-		for images, file_name in dataloader:
+		batch_num = 0
+		for images, _ in dataloader:
+			batch_num = batch_num + 1
+			if batch_num%10 == 0:
+				print('training data on batch',batch_num)
 			images = images.to(device) # send to GPU if available
 			images_out = model(images)# forward
 			#images = images.cpu()
 			#images_out = images_out.cpu()
 			loss = criterion(images,images_out)
 			loss.backward() # back propagation
-			optimizer.step() # updata parameters
+			optimizer.step() # update parameters
 			optimizer.zero_grad() # zero out the gradients
 			running_loss += loss.item() * images.size(0) # accumulate loss for this epoch
 		epoch_loss = running_loss / len(dataloader.dataset)
