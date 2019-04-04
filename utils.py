@@ -86,17 +86,17 @@ class ConvAutoencoder(nn.Module):
 	Here we implement upsampling by setting stride > 1 in the ConvTranspose2d layers.
 	"""
 	def __init__(self):
-		super(Autoencoder, self).__init__()
-		self.conv1 = nn.Conv2d(1, 16, 3, stride=1, padding=1)
+		super(ConvAutoencoder, self).__init__()
+		self.conv1 = nn.Conv2d(3, 16, 3, stride=1, padding=1)
 		self.conv2 = nn.Conv2d(16, 32, 3, stride=1, padding=1)
 		self.conv3 = nn.Conv2d(32, 32, 3, stride=1, padding=1)
-		self.conv4 = nn Conv2d(32, 16, 3, stride=1, padding=1)
+		self.conv4 = nn.Conv2d(32, 16, 3, stride=1, padding=1)
 		self.relu = nn.LeakyReLU(0.1)
 		self.pool = nn.MaxPool2d(2, 2)
-		self.transconv1 = nn.ConvTranspose2d(8, 8, 3, stride=2, padding=1)
-		self.transconv2 = nn.ConvTranspose2d(8, 8, 3, stride=2, padding=1)
-		self.transconv3 = nn.ConvTranspose2d(8, 16, 3, stride=2, padding=0)
-		self.transconv4 = nn.ConvTranspose2d(8, 16, 3, stride=2, padding=0)
+		self.transconv1 = nn.ConvTranspose2d(16, 16, 4, stride=2, padding=1)
+		self.transconv2 = nn.ConvTranspose2d(16, 32, 4, stride=2, padding=1)
+		self.transconv3 = nn.ConvTranspose2d(32, 32, 4, stride=2, padding=1)
+		self.transconv4 = nn.ConvTranspose2d(32, 3, 4, stride=2, padding=1)
 		self.sigmoid = nn.Sigmoid()
 
 	def encode(self, x):
@@ -112,17 +112,18 @@ class ConvAutoencoder(nn.Module):
 		x = self.conv4(x) # 16*32*32
 		x = self.relu(x)  # 16*32*32
 		x = self.pool(x)  # 16*16*16
-		return pool3
+		return x
 
 	def decode(self, x):
-		x = self.transconv1(x)
-		x = self.relu(x)
-		x = self.transconv2(x)
-		x = self.relu(x)
-		x = self.transconv3(x)
-		x = self.relu(x)
-		x = self.transconv4(x)
-		x = self.sigmoid(x)
+		x = self.transconv1(x) # 16*32*32
+		x = self.relu(x)       # 16*32*32
+		x = self.transconv2(x) # 32*64*64
+		x = self.relu(x)	   # 32*64*64
+		x = self.transconv3(x) # 32*128*128
+		x = self.relu(x)	   # 32*128*128
+		x = self.transconv4(x) # 3*256*256
+		x = self.sigmoid(x)    # 3*256*256
+		#print(x.size())
 		return x
 
 	def encode_vec(self, x):
@@ -158,7 +159,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		batch_num = 0
 		for images, _ in dataloader:
 			batch_num = batch_num + 1
-			if batch_num%10 == 0:
+			if batch_num%50 == 0:
 				print('training data on batch',batch_num)
 			images = images.to(device) # send to GPU if available
 			images_out = model(images)# forward
@@ -175,6 +176,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		if epoch_loss <= best_loss:
 			best_loss = epoch_loss
 			best_model_wts = copy.deepcopy(model.state_dict())
+		learningRateScheduler.step()
 
 	time_elapsed = time.time() - since
 	print( 'Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))

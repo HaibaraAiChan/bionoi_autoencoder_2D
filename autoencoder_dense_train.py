@@ -26,7 +26,7 @@ def getArgs():
                         help='seed for random number generation')
 
     parser.add_argument('-epoch',
-                        default=20,
+                        default=8,
 						type=int,
                         required=False,
                         help='number of epochs to train')
@@ -87,21 +87,23 @@ if __name__ == "__main__":
 	print('Current device: '+str(device))
 
 	 # define a transform with mean and std, another transform without them.
-	data_mean = [0.6008, 0.4180, 0.6341]
-	data_std = [0.2367, 0.1869, 0.2585]    
-	transform = transforms.Compose([transforms.ToTensor()])
-	transformWithNorm = transforms.Compose([
-	                    transforms.ToTensor(),
-	                    transforms.Normalize((data_mean[0], data_mean[1], data_mean[2]),
-	                                         (data_std[0], data_std[1], data_std[2]))
-	                                       ]) 	
-	
+	data_mean = [0.6150, 0.4381, 0.6450]
+	data_std = [0.6150, 0.4381, 0.6450]   
+    if normalize == True:
+        transformWithNorm = transforms.Compose([
+	                        transforms.ToTensor(),
+	                        transforms.Normalize((data_mean[0], data_mean[1], data_mean[2]),
+	                                             (data_std[0], data_std[1], data_std[2]))
+	                                           ])
+    else:
+        transform = transforms.Compose([transforms.ToTensor()])
+		
 	# put images into dataset
 	img_list = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
 	dataset = UnsuperviseDataset(data_dir, img_list, transform=transform)  
 	
 	# create dataloader
-	dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=1)
+	dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=16)
 	
 	# get some random training images to show
 	dataiter = iter(dataloader)
@@ -140,7 +142,7 @@ if __name__ == "__main__":
 						   lr=0.001, 
 						   betas=(0.9, 0.999), 
 						   eps=1e-08, 
-						   weight_decay=0.00005, 
+						   weight_decay=0.00001, 
 						   amsgrad=False)
 
 	learningRateScheduler = optim.lr_scheduler.MultiStepLR(optimizer, 

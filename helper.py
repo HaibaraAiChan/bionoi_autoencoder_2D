@@ -25,4 +25,5 @@ def list_plot(lst):
     plt.ylabel('loss')
     plt.title("Training Loss")
     plt.legend()
-    plt.draw()  
+    plt.draw()
+    fig.savefig('./log/loss.png', dpi=fig.dpi)  
