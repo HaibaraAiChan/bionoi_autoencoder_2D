@@ -9,7 +9,7 @@ import numpy as np
 from skimage import io
 from torch import nn
 from torch.utils import data
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 
 class UnsuperviseDataset(data.Dataset):
 	"""
@@ -47,13 +47,13 @@ class DenseAutoencoder(nn.Module):
 		"""
 		super(DenseAutoencoder, self).__init__()
 		self.enc_fc1 = nn.Linear(input_size,256)
-		self.enc_fc2 = nn.Linear(256,feature_size)		
+		self.enc_fc2 = nn.Linear(256,feature_size)
 		self.dec_fc1 = nn.Linear(feature_size,256)
 		self.dec_fc2 = nn.Linear(256,input_size)
 
 		self.relu = nn.LeakyReLU(0.1)
 		self.sigmoid = nn.Sigmoid()
-		self.dropout = nn.Dropout(0.5)		
+		self.dropout = nn.Dropout(0.5)
 
 	def flatten(self, x):
 		x = x.view(x.size(0), -1)
@@ -82,31 +82,60 @@ class DenseAutoencoder(nn.Module):
 
 class ConvAutoencoder(nn.Module):
 	"""
-	Convolutional style autoencoder
+	Convolutional style autoencoder.
+	Here we implement upsampling by setting stride > 1 in the ConvTranspose2d layers.
 	"""
-    def __init__(self):
-        super(ConvAutoencoder, self).__init__()
-        self.encoder = nn.Sequential(
-            nn.Conv2d(3, 16, 7, stride=1, padding=1),  # b, 16, 10, 10
-            nn.ReLU(True),
-            nn.MaxPool2d(2, stride=2),  # b, 16, 5, 5
-            nn.Conv2d(16, 8, 3, stride=2, padding=1),  # b, 8, 3, 3
-            nn.ReLU(True),
-            nn.MaxPool2d(2, stride=1)  # b, 8, 2, 2
-        )
-        self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(8, 16, 3, stride=2),  # b, 16, 5, 5
-            nn.ReLU(True),
-            nn.ConvTranspose2d(16, 8, 5, stride=3, padding=1),  # b, 8, 15, 15
-            nn.ReLU(True),
-            nn.ConvTranspose2d(8, 1, 2, stride=2, padding=1),  # b, 1, 28, 28
-            nn.Tanh()
-        )
+	def __init__(self):
+		super(Autoencoder, self).__init__()
+		self.conv1 = nn.Conv2d(1, 16, 3, stride=1, padding=1)
+		self.conv2 = nn.Conv2d(16, 32, 3, stride=1, padding=1)
+		self.conv3 = nn.Conv2d(32, 32, 3, stride=1, padding=1)
+		self.conv4 = nn Conv2d(32, 16, 3, stride=1, padding=1)
+		self.relu = nn.LeakyReLU(0.1)
+		self.pool = nn.MaxPool2d(2, 2)
+		self.transconv1 = nn.ConvTranspose2d(8, 8, 3, stride=2, padding=1)
+		self.transconv2 = nn.ConvTranspose2d(8, 8, 3, stride=2, padding=1)
+		self.transconv3 = nn.ConvTranspose2d(8, 16, 3, stride=2, padding=0)
+		self.transconv4 = nn.ConvTranspose2d(8, 16, 3, stride=2, padding=0)
+		self.sigmoid = nn.Sigmoid()
 
-    def forward(self, x):
-        x = self.encoder(x)
-        x = self.decoder(x)
-        return x
+	def encode(self, x):
+		x = self.conv1(x) # 16*256*256
+		x = self.relu(x)  # 16*256*256
+		x = self.pool(x)  # 16*128*128
+		x = self.conv2(x) # 32*128*128
+		x = self.relu(x)  # 32*128*128
+		x = self.pool(x)  # 32*64*64
+		x = self.conv3(x) # 32*64*64
+		x = self.relu(x)  # 32*64*64
+		x = self.pool(x)  # 32*32*32
+		x = self.conv4(x) # 16*32*32
+		x = self.relu(x)  # 16*32*32
+		x = self.pool(x)  # 16*16*16
+		return pool3
+
+	def decode(self, x):
+		x = self.transconv1(x)
+		x = self.relu(x)
+		x = self.transconv2(x)
+		x = self.relu(x)
+		x = self.transconv3(x)
+		x = self.relu(x)
+		x = self.transconv4(x)
+		x = self.sigmoid(x)
+		return x
+
+	def encode_vec(self, x):
+		"""
+		extract features, and then faltten the feature map as a vector
+		"""
+		x = encode(x)
+		return x.view(x.size(0), -1)
+
+	def forward(self, x):
+		x = self.encode(x)
+		x = self.decode(x)
+		return x
 
 def train(device, num_epochs, dataloader, model, criterion, optimizer, learningRateScheduler):
 	"""
@@ -124,7 +153,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 	for epoch in range(num_epochs):
 		print(' ')
 		print('Epoch {}/{}'.format(epoch+1, num_epochs))
-		print('-' * 15)		
+		print('-' * 15)
 		running_loss = 0.0
 		batch_num = 0
 		for images, _ in dataloader:
@@ -146,7 +175,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		if epoch_loss <= best_loss:
 			best_loss = epoch_loss
 			best_model_wts = copy.deepcopy(model.state_dict())
-		
+
 	time_elapsed = time.time() - since
 	print( 'Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
 	print( 'Best training loss: {:4f}'.format(best_loss))
