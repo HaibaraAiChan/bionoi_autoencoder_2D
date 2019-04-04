@@ -26,7 +26,7 @@ def getArgs():
                         help='seed for random number generation')
 
     parser.add_argument('-epoch',
-                        default=15,
+                        default=30,
 						type=int,
                         required=False,
                         help='number of epochs to train')
@@ -129,14 +129,14 @@ if __name__ == "__main__":
 
 	# optimizer  
     optimizer = optim.Adam(model.parameters(), 
-                           lr=0.001, 
+                           lr=0.01, 
                            betas=(0.9, 0.999), 
                            eps=1e-08, 
                            weight_decay=0.00001, 
                            amsgrad=False)
 
     learningRateScheduler = optim.lr_scheduler.MultiStepLR(optimizer, 
-                                                           milestones=[9,13], 
+                                                           milestones=[10,20], 
                                                            gamma=0.1)		
 
 	# begin training 
