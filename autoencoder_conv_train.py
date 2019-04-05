@@ -43,7 +43,7 @@ def getArgs():
                         help='directory of training images')
 
     parser.add_argument('-model_file',
-                        default='../trained_model/bionoi_autoencoder_conv.pt',
+                        default='./log/bionoi_autoencoder_conv.pt',
                         required=False,
                         help='file to save the model')						
 
@@ -129,14 +129,14 @@ if __name__ == "__main__":
 
 	# optimizer  
     optimizer = optim.Adam(model.parameters(), 
-                           lr=0.01, 
+                           lr=0.001, 
                            betas=(0.9, 0.999), 
-                           eps=1e-08, 
+                           eps=1e-10, 
                            weight_decay=0.00001, 
                            amsgrad=False)
 
     learningRateScheduler = optim.lr_scheduler.MultiStepLR(optimizer, 
-                                                           milestones=[10,20], 
+                                                           milestones=[25], 
                                                            gamma=0.1)		
 
 	# begin training 

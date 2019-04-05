@@ -1,0 +1,46 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    472589.smic3
+Username:  derick
+Group:     Users
+Date:      04-Apr-2019 17:12
+Node:      smic384 (225667)
+--------------------------------------
+PBS has allocated the following nodes:
+
+smic384
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node smic384 17:12:31 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 04-Apr-2019 17:12:31
+------------------------------------------------------
+------------------------------------------------------
+Running PBS epilogue script    - 04-Apr-2019 20:57:02
+------------------------------------------------------
+Checking node smic384 (MS)
+Checking node smic384 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 04-Apr-2019 20:57:04
+------------------------------------------------------
+Exit Status:     0
+Job ID:          472589.smic3
+Username:        derick
+Group:           Users
+Job Name:        bionoi_autoencoder
+Session Id:      225666
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=72:00:00
+Resources Used:  cput=17:16:56,mem=191814136kb,vmem=1997097176kb,walltime=03:44:33
+Queue Used:      v100
+Account String:  hpc_gcn01
+Node:            smic384
+Process id:      291006
+Last status:     04-Apr-2019:20:01 PBS_job=472589.smic3 user=derick allocation=hpc_gcn01 queue=v100 total_load=13.64 cpu_hours=1.75 wall_hours=1.80 unused_nodes=0 total_nodes=1 ppn=20 avg_load=13.64 avg_cpu=436% avg_mem=183907mb avg_vmem=1941290mb top_proc=derick:python:smic384:48.0G:4.6G:1.7hr:98% toppm=derick:python:smic384:62987M:5046M gpupeak=1 node_processes=67 avg_avail_mem=318936mb min_avail_mem=318936mb reverified_avg_load=11.94
+------------------------------------------------------
