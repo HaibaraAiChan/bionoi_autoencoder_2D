@@ -1,0 +1,47 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    636147.qb3
+Username:  wshi6
+Group:     loniusers
+Date:      05-Apr-2019 11:28
+Node:      qb001 (32882)
+--------------------------------------
+PBS has allocated the following nodes:
+
+qb001
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node qb001 11:28:03 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 05-Apr-2019 11:28:03
+------------------------------------------------------
+------------------------------------------------------
+Running PBS epilogue script    - 05-Apr-2019 16:23:28
+------------------------------------------------------
+Checking node qb001 (MS)
+-> Killing process of wshi6: [python]
+Checking node qb001 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 05-Apr-2019 16:23:30
+------------------------------------------------------
+Exit Status:     271
+Job ID:          636147.qb3
+Username:        wshi6
+Group:           loniusers
+Job Name:        bionoi_autoencoder
+Session Id:      32881
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=72:00:00
+Resources Used:  cput=07:58:31,mem=96534472kb,vmem=11405165668kb,walltime=04:55:27
+Queue Used:      k40
+Account String:  loni_bionoi01
+Node:            qb001
+Process id:      78385
+Last status:     05-Apr-2019:16:05 PBS_job=636147.qb3 user=wshi6 allocation=loni_bionoi01 queue=k40 total_load=0.00 cpu_hours=3.48 wall_hours=3.78 unused_nodes=0 total_nodes=1 ppn=20 avg_load=0.00 avg_cpu=0% avg_mem=2255mb avg_vmem=175324mb top_proc=wshi6:python:qb001:171G:2.2G:3.4hr:0% toppm=wshi6:python:qb001:182052M:2398M gpupeak=200 node_processes=3 avg_avail_mem=118708mb min_avail_mem=118708mb reverified_avg_load=0.04
+------------------------------------------------------

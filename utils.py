@@ -159,7 +159,7 @@ def train(device, num_epochs, dataloader, model, criterion, optimizer, learningR
 		batch_num = 0
 		for images, _ in dataloader:
 			batch_num = batch_num + 1
-			if batch_num%50 == 0:
+			if batch_num%100 == 0:
 				print('training data on batch',batch_num)
 			images = images.to(device) # send to GPU if available
 			images_out = model(images)# forward
