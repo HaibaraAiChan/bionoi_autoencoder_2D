@@ -1,13 +1,13 @@
 #!/bin/bash
 #PBS -l nodes=1:ppn=20
 #PBS -l walltime=72:00:00
-#PBS -q v100
+#PBS -q k40
 #PBS -N bionoi_autoencoder
-#PBS -A hpc_gcn01
+#PBS -A loni_bionoi01
 #PBS -j oe
 
 source activate pytorch
 module purge
 cd ~
-cd ../../../work/derick/deeplearning-data/bionoi_autoencoder_prj/bionoi_autoencoder/
+cd ../../work/wshi6/deeplearning-data/bionoi_autoencoder_prj/bionoi_autoencoder/
 python autoencoder_conv_train.py > ./log/autoencoder_conv_train.log 2>&1

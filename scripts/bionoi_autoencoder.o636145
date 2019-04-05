@@ -1,0 +1,47 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    636145.qb3
+Username:  wshi6
+Group:     loniusers
+Date:      05-Apr-2019 11:18
+Node:      qb001 (31542)
+--------------------------------------
+PBS has allocated the following nodes:
+
+qb001
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node qb001 11:18:26 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 05-Apr-2019 11:18:26
+------------------------------------------------------
+/var/spool/torque/mom_priv/jobs/636145.qb3.SC: line 13: cd: ../../../work/derick/deeplearning-data/bionoi_autoencoder_prj/bionoi_autoencoder/: No such file or directory
+/var/spool/torque/mom_priv/jobs/636145.qb3.SC: line 14: ./log/autoencoder_conv_train.log: No such file or directory
+------------------------------------------------------
+Running PBS epilogue script    - 05-Apr-2019 11:18:28
+------------------------------------------------------
+Checking node qb001 (MS)
+Checking node qb001 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 05-Apr-2019 11:18:30
+------------------------------------------------------
+Exit Status:     1
+Job ID:          636145.qb3
+Username:        wshi6
+Group:           loniusers
+Job Name:        bionoi_autoencoder
+Session Id:      31541
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=72:00:00
+Resources Used:  cput=00:00:01,mem=0kb,vmem=0kb,walltime=00:00:06
+Queue Used:      k40
+Account String:  loni_bionoi01
+Node:            qb001
+Process id:      32171
+------------------------------------------------------

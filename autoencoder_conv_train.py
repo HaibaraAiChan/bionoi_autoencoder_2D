@@ -48,7 +48,7 @@ def getArgs():
                         help='file to save the model')						
 
     parser.add_argument('-batch_size',
-                        default=512,
+                        default=256,
 						type=int,
                         required=False,
                         help='the batch size, normally 2^n.')
@@ -105,11 +105,8 @@ if __name__ == "__main__":
 	#images = torch.reshape(images,(images.size(0),3,256,256))
 	#imshow(torchvision.utils.make_grid(images))
 	
-    # calulate the input size (flattened)
     image_shape = images.shape
     print('shape of input:', image_shape)
-    input_size = image_shape[1]*image_shape[2]*image_shape[3]
-    print('flattened input size:',input_size) 
 
 	# instantiate model
     model = ConvAutoencoder()
