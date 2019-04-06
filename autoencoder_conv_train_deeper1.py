@@ -13,7 +13,7 @@ import utils
 from os import listdir
 from os.path import isfile, join
 import matplotlib.pyplot as plt 
-from utils import UnsuperviseDataset, ConvAutoencoder, train
+from utils import UnsuperviseDataset, ConvAutoencoder_deeper1, train
 from helper import imshow, list_plot
 
 def getArgs():
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     print('shape of input:', image_shape)
 
 	# instantiate model
-    model = ConvAutoencoder()
+    model = ConvAutoencoder_deeper1()
 	# if there are multiple GPUs, split the batch to different GPUs
     if torch.cuda.device_count() > 1:
         print("Using "+str(torch.cuda.device_count())+" GPUs...")
