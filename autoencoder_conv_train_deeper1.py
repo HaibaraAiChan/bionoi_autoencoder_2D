@@ -43,7 +43,7 @@ def getArgs():
                         help='directory of training images')
 
     parser.add_argument('-model_file',
-                        default='./log/bionoi_autoencoder_conv.pt',
+                        default='./log/bionoi_autoencoder_conv_deeper1.pt',
                         required=False,
                         help='file to save the model')						
 

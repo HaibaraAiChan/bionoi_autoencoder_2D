@@ -1,0 +1,12 @@
+Current device: cpu
+normalizing data:
+mean: [0.615, 0.4381, 0.645]
+std: [0.615, 0.4381, 0.645]
+Traceback (most recent call last):
+  File "autoencoder_conv_train_deeper1.py", line 92, in <module>
+    img_list = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
+  File "autoencoder_conv_train_deeper1.py", line 92, in <listcomp>
+    img_list = [f for f in listdir(data_dir) if isfile(join(data_dir, f))]
+  File "/home/derick/miniconda3/envs/pytorch/lib/python3.6/genericpath.py", line 30, in isfile
+    st = os.stat(path)
+KeyboardInterrupt
