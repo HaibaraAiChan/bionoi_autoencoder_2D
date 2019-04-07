@@ -1,0 +1,30 @@
+Current device: cuda:0
+normalizing data:
+mean: [0.615, 0.4381, 0.645]
+std: [0.615, 0.4381, 0.645]
+shape of input: torch.Size([256, 3, 256, 256])
+Using 2 GPUs...
+paramters to train:
+module.conv1.weight
+module.conv1.bias
+module.conv2.weight
+module.conv2.bias
+module.conv3.weight
+module.conv3.bias
+module.conv4.weight
+module.conv4.bias
+module.enc_fc.weight
+module.enc_fc.bias
+module.dec_fc.weight
+module.dec_fc.bias
+module.transconv1.weight
+module.transconv1.bias
+module.transconv2.weight
+module.transconv2.bias
+module.transconv3.weight
+module.transconv3.bias
+module.transconv4.weight
+module.transconv4.bias
+ 
+Epoch 1/25
+---------------
