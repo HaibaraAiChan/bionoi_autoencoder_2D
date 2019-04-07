@@ -28,3 +28,47 @@ module.transconv4.bias
  
 Epoch 1/25
 ---------------
+training data on batch 200
+training data on batch 400
+training data on batch 600
+training data on batch 800
+training data on batch 1000
+training data on batch 1200
+Training loss:0.147683
+epoch complete in 14m 59s
+ 
+Epoch 2/25
+---------------
+training data on batch 200
+training data on batch 400
+training data on batch 600
+training data on batch 800
+training data on batch 1000
+training data on batch 1200
+Training loss:0.106592
+epoch complete in 15m 29s
+ 
+Epoch 3/25
+---------------
+training data on batch 200
+training data on batch 400
+training data on batch 600
+training data on batch 800
+training data on batch 1000
+training data on batch 1200
+Training loss:0.104370
+epoch complete in 15m 15s
+ 
+Epoch 4/25
+---------------
+training data on batch 200
+training data on batch 400
+training data on batch 600
+training data on batch 800
+training data on batch 1000
+training data on batch 1200
+Training loss:0.104765
+epoch complete in 15m 16s
+ 
+Epoch 5/25
+---------------
